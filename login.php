@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['user_id'] = $row['user_id'];
             $_SESSION['username'] = $row['username'];
             $_SESSION['loggedin'] = true;
-            header("Location: dashboard.php");
+            header("Location: index.php");
             exit();
         } else {
             // Password is incorrect, set password error message
