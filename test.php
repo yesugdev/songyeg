@@ -4,7 +4,7 @@ use Orhanerday\OpenAi\OpenAi;
 
 function generateResponse($prompt) {
     // Initialize OpenAI
-    $open_ai = new OpenAi('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');
+    $open_ai = new OpenAi('KEY');
     
     // Call OpenAI completion API
     $complete = $open_ai->completion([
