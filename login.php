@@ -1,45 +1,33 @@
 <?php
-// Start session
 session_start();
 
-// Include database connection
 include('db.php');
 
-// Initialize variables for error messages
 $username_err = $password_err = "";
 
-// Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Retrieve username and password from form
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Prepare SQL query to fetch user from database
     $stmt = $conn->prepare("SELECT user_id, username, password_hash FROM users WHERE username = ?");
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
 
-    // Check if user exists
     if ($result->num_rows == 1) {
         $row = $result->fetch_assoc();
-        // Verify password
         if (password_verify($password, $row['password_hash'])) {
-            // Password is correct, set session variables and redirect to dashboard
             $_SESSION['user_id'] = $row['user_id'];
             $_SESSION['username'] = $row['username'];
             $_SESSION['loggedin'] = true;
             header("Location: index.php");
             exit();
         } else {
-            // Password is incorrect, set password error message
             $password_err = "Хэрэглэгчийн нэр эсвэл нууц үг буруу.";
         }
     } else {
-        // User does not exist, set username error message
         $username_err = "Хэрэглэгчийн нэр эсвэл нууц үг буруу.";
     }
-    // Close statement
     $stmt->close();
 }
 ?>

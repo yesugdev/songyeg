@@ -16,6 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `lesson`
+--
+
+DROP TABLE IF EXISTS `lesson`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `lesson` (
+  `lesson_id` int NOT NULL,
+  `lesson_name` varchar(45) DEFAULT NULL,
+  `lesson_name_mn` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`lesson_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `lesson`
+--
+
+LOCK TABLES `lesson` WRITE;
+/*!40000 ALTER TABLE `lesson` DISABLE KEYS */;
+INSERT INTO `lesson` VALUES (1,'Algorithm','Алгоритм'),(2,'Information','Мэдээлэл гэж юу вэ?'),(3,'IT for Objects','Бидний хүрээлэн буй обьект'),(4,'Computer Archicture','Компьютер'),(5,'Internet Of Usage','Интернэт хэрэглээ'),(6,'Easy to use programs','Хэрэглээний хялбар программууд');
+/*!40000 ALTER TABLE `lesson` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `lesson_plans`
 --
 
@@ -30,6 +55,9 @@ CREATE TABLE `lesson_plans` (
   `content` text,
   `grade` enum('K','1','2','3','4','5','6','7','8','9','10','11','12') NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `cost` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `subject` varchar(255) NOT NULL DEFAULT '',
+  `lesson_id` int NOT NULL,
   PRIMARY KEY (`lesson_plan_id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `lesson_plans_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE
@@ -109,4 +137,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-22  0:00:09
+-- Dump completed on 2024-04-24 23:44:45

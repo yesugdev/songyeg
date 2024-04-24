@@ -1,34 +1,22 @@
 <?php
-// Start session
 session_start();
 
-// Include database connection
 include('db.php');
 
-// Define variables and initialize with empty values
 $username = $password = $confirm_password = $email = "";
 $username_err = $password_err = $confirm_password_err = $email_err = "";
 
-// Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    // Validate username
     if (empty(trim($_POST["username"]))) {
         $username_err = "Please enter a username.";
     } else {
-        // Prepare a select statement
         $sql = "SELECT user_id FROM users WHERE username = ?";
 
         if ($stmt = $conn->prepare($sql)) {
-            // Bind variables to the prepared statement as parameters
             $stmt->bind_param("s", $param_username);
-
-            // Set parameters
             $param_username = trim($_POST["username"]);
-
-            // Attempt to execute the prepared statement
             if ($stmt->execute()) {
-                // Store result
                 $stmt->store_result();
 
                 if ($stmt->num_rows == 1) {
@@ -40,24 +28,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo "Алдаа! Дахин бүртгүүлж үзнэ үү..";
             }
 
-            // Close statement
             $stmt->close();
         }
     }
-
-    // Validate email
     if (empty(trim($_POST["email"]))) {
         $email_err = "Имэйлээ оруулна уу.";
     } else {
         $email = trim($_POST["email"]);
-        // Check if email address is well-formed
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $email_err = "Хүчингүй имэйл формат.";
         }
     }
 
-    // Validate password
-  // Validate password strength
 if (empty(trim($_POST["password"]))) {
     $password_err = "Нууц үг оруулна уу.";
 } elseif (strlen(trim($_POST["password"])) < 6) {
@@ -68,8 +50,6 @@ if (empty(trim($_POST["password"]))) {
     $password = trim($_POST["password"]);
 }
 
-
-    // Validate confirm password
     if (empty(trim($_POST["confirm_password"]))) {
         $confirm_password_err = "Нууц үгээ баталгаажуулна уу.";
     } else {
@@ -79,35 +59,27 @@ if (empty(trim($_POST["password"]))) {
         }
     }
 
-    // Check input errors before inserting into database
     if (empty($username_err) && empty($email_err) && empty($password_err) && empty($confirm_password_err)) {
 
-        // Prepare an insert statement
         $sql = "INSERT INTO users (username, email, password_hash) VALUES (?, ?, ?)";
 
         if ($stmt = $conn->prepare($sql)) {
-            // Bind variables to the prepared statement as parameters
             $stmt->bind_param("sss", $param_username, $param_email, $param_password);
 
-            // Set parameters
             $param_username = $username;
             $param_email = $email;
-            $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
-
-            // Attempt to execute the prepared statement
+            $param_password = password_hash($password, PASSWORD_DEFAULT); 
             if ($stmt->execute()) {
-                // Redirect to login page
                 header("location: dashboard.php");
             } else {
                 echo "Алдаа! Дахин бүртгүүлж эсвэл нэвтэрч үзнэ үү.";
             }
 
-            // Close statement
             $stmt->close();
         }
     }
 
-    // Close connection
+
     $conn->close();
 }
 ?>

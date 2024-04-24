@@ -1,9 +1,19 @@
+<?php
+// Retrieve user information from the database
+$stmt = $conn->prepare("SELECT username, email FROM users WHERE user_id = ?");
+$stmt->bind_param("i", $param_id);
+$param_id = $_SESSION["user_id"];
+$stmt->execute();
+$stmt->bind_result($username, $email);
+$stmt->fetch();
+$stmt->close();
+?>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <div class="row justify-content-center">
     <div class="col-12">
     <div class="row align-items-center mb-2">
                 <div class="col">
-                  <h2 class="h5 page-title">Welcome!</h2>
+                  <h2 class="h5 page-title">Welcome! <?php echo $username?></h2>
                 </div>
                 <div class="col-auto">
                   <form class="form-inline">
