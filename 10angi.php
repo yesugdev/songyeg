@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once __DIR__ . '/vendor/autoload.php'; // Include Composer autoloader
-use Orhanerday\OpenAi\OpenAi;
+// require_once __DIR__ . '/vendor/autoload.php'; // Include Composer autoloader
+// use Orhanerday\OpenAi\OpenAi;
 
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("location: login.php");
