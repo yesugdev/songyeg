@@ -1,62 +1,62 @@
 <?php
-session_start();
+// session_start();
 
-require_once __DIR__ . '/vendor/autoload.php'; // Include Composer autoloader
-use Orhanerday\OpenAi\OpenAi;
+// require_once __DIR__ . '/vendor/autoload.php'; // Include Composer autoloader
+// use Orhanerday\OpenAi\OpenAi;
 
-// Check if user is not logged in, redirect to login page
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-    header("location: login.php");
-    exit;
-}
+// // Check if user is not logged in, redirect to login page
+// if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+//     header("location: login.php");
+//     exit;
+// }
 
-// Include database connection
-include('db.php');
+// // Include database connection
+// include('db.php');
 
-// Function to generate response
-function generateResponse($lesson_plan, $grade, $duration_time) {
-    // Initialize OpenAI client
-    $open_ai = new OpenAi('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');
+// // Function to generate response
+// function generateResponse($lesson_plan, $grade, $duration_time) {
+//     // Initialize OpenAI client
+//     $open_ai = new OpenAi('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');
     
-    // Create prompt for OpenAI
-    $prompt = "Create a program according to the standard structure of the lesson plan. Lesson Plan name is $lesson_plan. And Grade is $grade. Duration time is $duration_time. and Translate this Lesson Plan to Mongolian Language";
+//     // Create prompt for OpenAI
+//     $prompt = "Create a program according to the standard structure of the lesson plan. Lesson Plan name is $lesson_plan. And Grade is $grade. Duration time is $duration_time. and Translate this Lesson Plan to Mongolian Language";
 
-    // Request completion from OpenAI
-    $complete = $open_ai->completion([
-        'model' => 'gpt-3.5-turbo-instruct',
-        'prompt' => $prompt,
-        'temperature' => 0.9,
-        'max_tokens' => 1500,
-        'frequency_penalty' => 0,
-        'presence_penalty' => 0.6,
-    ]);
+//     // Request completion from OpenAI
+//     $complete = $open_ai->completion([
+//         'model' => 'gpt-3.5-turbo-instruct',
+//         'prompt' => $prompt,
+//         'temperature' => 0.9,
+//         'max_tokens' => 1500,
+//         'frequency_penalty' => 0,
+//         'presence_penalty' => 0.6,
+//     ]);
 
-    // Process OpenAI response
-    if ($complete) {
-        $php_obj = json_decode($complete);
-        $response = $php_obj->choices[0]->text;
-        return $response;
-    } else {
-        return "Error: Unable to fetch response.";
-    }
-}
+//     // Process OpenAI response
+//     if ($complete) {
+//         $php_obj = json_decode($complete);
+//         $response = $php_obj->choices[0]->text;
+//         return $response;
+//     } else {
+//         return "Error: Unable to fetch response.";
+//     }
+// }
 
-// Define lesson plans and grades
-$lesson_plans = ["Algorithm", "Plan B", "Plan C"];
-$grades = ["Grade 9", "Grade 10", "Grade 11"];
+// // Define lesson plans and grades
+// $lesson_plans = ["Algorithm", "Plan B", "Plan C"];
+// $grades = ["Grade 9", "Grade 10", "Grade 11"];
 
-// Process form submission
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get user input from the form
-    $lesson_plan = $_POST['lesson_plan'];
-    $grade = $_POST['grade'];
-    $duration_time = $_POST['duration_time'];
+// // Process form submission
+// if ($_SERVER["REQUEST_METHOD"] == "POST") {
+//     // Get user input from the form
+//     $lesson_plan = $_POST['lesson_plan'];
+//     $grade = $_POST['grade'];
+//     $duration_time = $_POST['duration_time'];
 
-    // Generate response
-    $response = generateResponse($lesson_plan, $grade, $duration_time);
-} else {
-    $response = ""; // Initialize response variable
-}
+//     // Generate response
+//     $response = generateResponse($lesson_plan, $grade, $duration_time);
+// } else {
+//     $response = ""; // Initialize response variable
+// }
 ?>
 
 <!DOCTYPE html>
