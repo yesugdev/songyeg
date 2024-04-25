@@ -17,36 +17,36 @@ $stmt->fetch();
 $stmt->close();
 // function generateResponse($lesson_plan, $grade, $duration_time) {
 
-    $open_ai = new OpenAi('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');
-    $prompt = "Create a program according to the standard structure of the lesson plan. Lesson Plan name is $lesson_plan. And Grade is $grade.Always with time. Duration time is $duration_time. and Translate this Lesson Plan to Mongolian Language. Student is translated as сурагч";
-    $complete = $open_ai->completion([
-        'model' => 'gpt-3.5-turbo-instruct',
-        'prompt' => $prompt,
-        'temperature' => 0.9,
-        'max_tokens' => 1500,
-        'frequency_penalty' => 0,
-        'presence_penalty' => 0.6,
-    ]);
-    if ($complete) {
-        $php_obj = json_decode($complete);
-        $response = $php_obj->choices[0]->text;
-        return $response;
-    } else {
-        return "Error: Unable to fetch response.";
-    }
-}
+//     $open_ai = new OpenAi('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');
+//     $prompt = "Create a program according to the standard structure of the lesson plan. Lesson Plan name is $lesson_plan. And Grade is $grade.Always with time. Duration time is $duration_time. and Translate this Lesson Plan to Mongolian Language. Student is translated as сурагч";
+//     $complete = $open_ai->completion([
+//         'model' => 'gpt-3.5-turbo-instruct',
+//         'prompt' => $prompt,
+//         'temperature' => 0.9,
+//         'max_tokens' => 1500,
+//         'frequency_penalty' => 0,
+//         'presence_penalty' => 0.6,
+//     ]);
+//     if ($complete) {
+//         $php_obj = json_decode($complete);
+//         $response = $php_obj->choices[0]->text;
+//         return $response;
+//     } else {
+//         return "Error: Unable to fetch response.";
+//     }
+// }
 
-$lesson_plans = ["Algorithm", "Plan B", "Plan C"];
-$grades = ["10th Grade"];
+// $lesson_plans = ["Algorithm", "Plan B", "Plan C"];
+// $grades = ["10th Grade"];
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $lesson_plan = $_POST['lesson_plan'];
-    $grade = $_POST['grade'];
-    $duration_time = $_POST['duration_time'];
-    $response = generateResponse($lesson_plan, $grade, $duration_time);
-} else {
-    $response = ""; 
-}
+// if ($_SERVER["REQUEST_METHOD"] == "POST") {
+//     $lesson_plan = $_POST['lesson_plan'];
+//     $grade = $_POST['grade'];
+//     $duration_time = $_POST['duration_time'];
+//     $response = generateResponse($lesson_plan, $grade, $duration_time);
+// } else {
+//     $response = ""; 
+// }
 
 ?>
 
