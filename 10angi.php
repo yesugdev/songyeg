@@ -1,21 +1,21 @@
 <?php
-session_start();
-require_once __DIR__ . '/vendor/autoload.php'; // Include Composer autoloader
-use Orhanerday\OpenAi\OpenAi;
+// session_start();
+// require_once __DIR__ . '/vendor/autoload.php'; // Include Composer autoloader
+// use Orhanerday\OpenAi\OpenAi;
 
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-    header("location: login.php");
-    exit;
-}
-include('db.php');
-$stmt = $conn->prepare("SELECT username, email FROM users WHERE user_id = ?");
-$stmt->bind_param("i", $param_id);
-$param_id = $_SESSION["user_id"];
-$stmt->execute();
-$stmt->bind_result($username, $email);
-$stmt->fetch();
-$stmt->close();
-// function generateResponse($lesson_plan, $grade, $duration_time) {
+// if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+//     header("location: login.php");
+//     exit;
+// }
+// include('db.php');
+// $stmt = $conn->prepare("SELECT username, email FROM users WHERE user_id = ?");
+// $stmt->bind_param("i", $param_id);
+// $param_id = $_SESSION["user_id"];
+// $stmt->execute();
+// $stmt->bind_result($username, $email);
+// $stmt->fetch();
+// $stmt->close();
+// // function generateResponse($lesson_plan, $grade, $duration_time) {
 
 //     $open_ai = new OpenAi('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');
 //     $prompt = "Create a program according to the standard structure of the lesson plan. Lesson Plan name is $lesson_plan. And Grade is $grade.Always with time. Duration time is $duration_time. and Translate this Lesson Plan to Mongolian Language. Student is translated as сурагч";
